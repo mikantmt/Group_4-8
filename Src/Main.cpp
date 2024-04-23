@@ -2,11 +2,14 @@
 
 #include "DxLib.h"	//DXライブラリのインクルード
 
-//C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用
+#include "Common.h"
+#include "Scene/manager/Scene.h"
+#include "Scene/Title/SceneTitle.h"
+#include "Scene/Play/ScenePlay.h"
+#include "Scene/Result/SceneResult.h"
+#include "Input/Input.h"
 
-// define
-#define	SCREEN_SIZE_X	640	// X方向の画面サイズを指定
-#define	SCREEN_SIZE_Y	480	// Y方向の画面サイズを指定
+SCENE_ID g_CurrentSceneId = SCENE_ID_INIT_TITLE;
 
 // Win32アプリケーションは WinMain関数 から始まる
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -28,6 +31,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//-----------------------------------------
 	//一番最初に１回だけやる処理をここに書く
 
+	//クラスの宣言
+	cScene* Scene = nullptr;
+	Input input;
+
 	//-----------------------------------------
 
 	//ゲームメインループ
@@ -42,11 +49,92 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//画面に表示されたものを初期化
 		ClearDrawScreen();
 
+		input.StepInput();
+
 		//-----------------------------------------
 		//ここからゲームの本体を書くことになる
 		//-----------------------------------------
 		
+		switch (g_CurrentSceneId)
+		{
 
+		case SCENE_ID_INIT_TITLE:
+
+			Scene = new cTitle;
+			if (Scene) {
+				Scene->Init();
+			}
+
+			break;
+		case SCENE_ID_LOOP_TITLE:
+
+			if (Scene) {
+				Scene->Step();
+				Scene->Draw();
+			}
+
+
+			break;
+		case SCENE_ID_FIN_TITLE:
+			if (Scene) {
+				Scene->Fin();
+				delete Scene;
+				Scene = nullptr;
+			}
+			break;
+
+		case SCENE_ID_INIT_PLAY:
+
+			Scene = new cPlay;
+			if (Scene) {
+				Scene->Init();
+			}
+
+			break;
+		case SCENE_ID_LOOP_PLAY:
+
+			if (Scene) {
+				Scene->Step();
+				Scene->Draw();
+			}
+
+
+			break;
+		case SCENE_ID_FIN_PLAY:
+			if (Scene) {
+				Scene->Fin();
+				delete Scene;
+				Scene = nullptr;
+			}
+			break;
+
+		case SCENE_ID_INIT_RESULT:
+
+			Scene = new cResult;
+			if (Scene) {
+				Scene->Init();
+			}
+
+			break;
+		case SCENE_ID_LOOP_RESULT:
+
+			if (Scene) {
+				Scene->Step();
+				Scene->Draw();
+			}
+
+
+			break;
+		case SCENE_ID_FIN_RESULT:
+			if (Scene) {
+				Scene->Fin();
+				delete Scene;
+				Scene = nullptr;
+			}
+			break;
+		default:
+			break;
+		}
 
 		//-----------------------------------------
 		//ループの終わりに
