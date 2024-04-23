@@ -5,6 +5,8 @@
 #include "../../Input/Input.h"
 #include "../../Sound/Sound.h"
 
+#include "../../Score/Score.h"
+
 enum SCENE_ID
 {
 	// タイトルシーンのID
@@ -33,6 +35,7 @@ class cScene {
 		Collision collision;
 		Sound sound;
 		Input input;
+		Score score;
 
 		virtual void Init() = 0;
 		virtual void Step() = 0;
