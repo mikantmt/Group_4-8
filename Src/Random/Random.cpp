@@ -4,7 +4,7 @@
 float Random::ScopingRand(float min, float max) {
 	float rand;
 
-	rand = GetRand(max);
+	rand = (float)GetRand((int)max);
 
 	if (rand <= min) {
 		return ScopingRand(min, max);
