@@ -9,22 +9,23 @@ class Player {
 
 protected:
 	//プレイヤー変数
-	int playerHan = 0;						//プレイヤー画像
-	int player_x = 0, player_y = 0;			//プレイヤー座標
-	const int Player_Animation = 11;		//プレイヤーのアニメーション数
-	const int playerSize = 64;				//プレイヤー画像サイズ
+	int playerHan = 0;			//プレイヤー画像
+	int player_x  = 0;			//プレイヤー座標X
+	int player_y  = 0;			//プレイヤー座標Y
+	const int playeranim = 11;	//プレイヤーのアニメーション数
+	const int playerSize = 64;	//プレイヤー画像サイズ
 
-	bool isUp = false;						//プレイヤーが上昇中か調べるフラグ
-	float Yspeed = 0.0f;					//ジャンプ用
-	float jump_power = 7.0f;				//ジャンプパワー
+	bool isUp		 = false;	//プレイヤーが上昇中か調べるフラグ
+	float Yspeed	 = 0.0f;	//ジャンプ用
+	float jump_power = 7.0f;	//ジャンプ量
 
-	int animState = 0;						//右向きか左向きか
-	int animFlag = 0;						//アニメーションの種類
-	int animIndex = 0;						//アニメーションの添え字
-	int changeAnimFlame = 0;				//アニメーション切り替え時間
-	int animFlameCount = 0;					//切り替え時間カウント
-	bool playerOnSwitch = false;			//プレイヤーとスイッチが重なっているか
-	bool playerGoalFlag = false;			//プレイヤーがゴールにいるか
+	int animState     = 0;		//右向きか左向きか
+	int animFlag      = 0;		//アニメーションの種類
+	int animIndex	  = 0;		//アニメーションの添え字
+	int AnimFlame     = 0;		//アニメーション切り替え時間
+	int FlameCount    = 0;		//切り替え時間カウント
+	bool playerSwitch = false;	//プレイヤーとスイッチが重なっているか
+	bool playerGoal   = false;	//プレイヤーがゴールにいるか
 
 public:
 	//歩いているときのサウンド

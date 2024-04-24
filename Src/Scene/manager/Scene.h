@@ -17,8 +17,8 @@ enum SCENE_ID
 
 	// シーンの情報
 	SCENE_ID_INIT_SELECT = 200,	// 初期化
-	SCENE_ID_LOOP_SELECT,			// ループ
-	SCENE_ID_FIN_SELECT,			// 終了
+	SCENE_ID_LOOP_SELECT,		// ループ
+	SCENE_ID_FIN_SELECT,		// 終了
 
 	// シーンの情報
 	SCENE_ID_INIT_PLAY = 300,	// 初期化
