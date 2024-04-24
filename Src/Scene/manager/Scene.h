@@ -4,6 +4,7 @@
 #include "../../Collision/Collision.h"
 #include "../../Input/Input.h"
 #include "../../Sound/Sound.h"
+#include "../../Player/Player.h"
 
 #include "../../Score/Score.h"
 
@@ -36,6 +37,7 @@ class cScene {
 		Sound sound;
 		Input input;
 		Score score;
+		Player player;
 
 		virtual void Init() = 0;
 		virtual void Step() = 0;
