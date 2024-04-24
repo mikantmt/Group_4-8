@@ -4,6 +4,7 @@
 #include "../../Collision/Collision.h"
 #include "../../Input/Input.h"
 #include "../../Sound/Sound.h"
+#include "../../Player/Player.h"
 
 #include "../../Score/Score.h"
 
@@ -16,8 +17,8 @@ enum SCENE_ID
 
 	// シーンの情報
 	SCENE_ID_INIT_SELECT = 200,	// 初期化
-	SCENE_ID_LOOP_SELECT,			// ループ
-	SCENE_ID_FIN_SELECT,			// 終了
+	SCENE_ID_LOOP_SELECT,		// ループ
+	SCENE_ID_FIN_SELECT,		// 終了
 
 	// シーンの情報
 	SCENE_ID_INIT_PLAY = 300,	// 初期化
@@ -36,6 +37,7 @@ class cScene {
 		Sound sound;
 		Input input;
 		Score score;
+		Player player;
 
 		virtual void Init() = 0;
 		virtual void Step() = 0;
