@@ -14,8 +14,9 @@ protected:
 	const int Player_Animation = 11;		//プレイヤーのアニメーション数
 	const int playerSize = 64;				//プレイヤー画像サイズ
 
-	float BasePlayerSpeed = 0.5f;			//プレイヤー基本移動速度
-	float MaxPlayerSpeed = 5.0f;			//プレイヤー最大移動速度
+	bool isUp = false;						//プレイヤーが上昇中か調べるフラグ
+	float Yspeed = 0.0f;					//ジャンプ用
+	float jump_power = 7.0f;				//ジャンプパワー
 
 	int animState = 0;						//右向きか左向きか
 	int animFlag = 0;						//アニメーションの種類
