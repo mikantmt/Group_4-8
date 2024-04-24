@@ -5,7 +5,7 @@ void Collision::Init() {
 }
 
 
-bool Collision::IsHitRect(int Ax, int Ay, int Aw, int Ah, int Bx, int By, int Bw, int Bh) {
+bool Collision::IsHitRect(float Ax, float Ay, float Aw, float Ah, float Bx, float By, float Bw, float Bh) {
 	if (Bx < Ax + Aw &&
 		Bx + Bw > Ax &&
 		By + Bh > Ay &&
@@ -34,16 +34,16 @@ bool Collision::IsHitBox(VECTOR Obj1, VECTOR Size1, VECTOR Obj2, VECTOR Size2) {
 }
 
 
-bool Collision::IsHitCircle(int x1, int y1, int r1, int x2, int y2, int r2){
+bool Collision::IsHitCircle(float x1, float y1, float r1, float x2, float y2, float r2){
 	//‚Q‚Â‚Ì”¼Œa‚Ì‡Œv
-	int sum_radius = r1 + r2;
+	float sum_radius = r1 + r2;
 	sum_radius *= sum_radius;
 
 	//‰~“¯Žm‚Ì’·‚³
-	int x_len = x1 - x2;
+	float x_len = x1 - x2;
 	x_len *= x_len;
 
-	int y_len = y1 - y2;
+	float y_len = y1 - y2;
 	y_len *= y_len;
 
 	//‰~‚Ì“–‚½‚è”»’è
@@ -59,17 +59,17 @@ bool Collision::IsHitCircle(int x1, int y1, int r1, int x2, int y2, int r2){
 bool Collision::IsHitSphere(VECTOR Obj1, float radius1, VECTOR Obj2, float radius2)
 {
 	//‚Q‚Â‚Ì”¼Œa‚Ì‡Œv
-	int sum_radius = radius1 + radius2;
+	float sum_radius = radius1 + radius2;
 	sum_radius *= sum_radius;
 
 	//‹…“¯Žm‚Ì’·‚³
-	int x_len = Obj1.x - Obj2.x;
+	float x_len = Obj1.x - Obj2.x;
 	x_len *= x_len;
 
-	int y_len = Obj1.y - Obj2.y;
+	float y_len = Obj1.y - Obj2.y;
 	y_len *= y_len;
 
-	int z_len = Obj1.z - Obj2.z;
+	float z_len = Obj1.z - Obj2.z;
 	z_len *= z_len;
 
 	//‹…‚Ì“–‚½‚è”»’è
@@ -81,7 +81,7 @@ bool Collision::IsHitSphere(VECTOR Obj1, float radius1, VECTOR Obj2, float radiu
 	return false;
 }
 
-bool Collision::RectToMousePointa(float X,float Y,float W,float H, int MX, int MY) {
+bool Collision::RectToMousePofloata(float X,float Y,float W,float H, float MX, float MY) {
 
 	if (X + W >= MX && X <= MX
 		&& Y + H >= MY && Y <= MY) {
@@ -91,11 +91,11 @@ bool Collision::RectToMousePointa(float X,float Y,float W,float H, int MX, int M
 		return false;
 }
 
-bool Collision::IsClickOnRect(float X, float Y, float W, float H, int MX, int MY)
+bool Collision::IsClickOnRect(float X, float Y, float W, float H, float MX, float MY)
 {
 	//‹éŒ`‚Ì’†‚É‚ ‚é
 
-	if (RectToMousePointa(X,Y,W,H, MX, MY)) {
+	if (RectToMousePofloata(X,Y,W,H, MX, MY)) {
 		if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 		{
 			//‰Ÿ‚³‚ê‚Ä‚¢‚é
