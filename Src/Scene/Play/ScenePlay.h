@@ -1,7 +1,7 @@
 #pragma once
 #include "../manager/Scene.h"
 
-class cPlay : public cScene {
+class cPlay : public cSceneBase {
 private:
 
 public:

@@ -3,13 +3,12 @@
 void cResult::Init()
 {
 	// タイトルのループ処理へ遷移
-	g_CurrentSceneId = SCENE_ID_LOOP_RESULT;
 }
 
 void cResult::Step()
 {
 	if (input.IsKeyPush(KEY_INPUT_SPACE)) {
-		g_CurrentSceneId = SCENE_ID_FIN_RESULT;
+		cScene::SceneTypeID = SCENE_TYPE::TYPE_ID_FIN;
 	}
 }
 
@@ -21,6 +20,6 @@ void cResult::Draw()
 void cResult::Fin()
 {
 	// プレイシーンに遷移
-	g_CurrentSceneId = SCENE_ID_INIT_TITLE;
+	cScene::SceneID = SCENE_ID::SCENE_ID_TITLE;
 	
 }

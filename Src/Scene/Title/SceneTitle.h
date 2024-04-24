@@ -1,7 +1,7 @@
 #pragma once
 #include "../manager/Scene.h"
 
-class cTitle : public cScene {
+class cTitle : public cSceneBase {
 private:
 
 public:

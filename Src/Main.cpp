@@ -4,12 +4,9 @@
 
 #include "Common.h"
 #include "Scene/manager/Scene.h"
-#include "Scene/Title/SceneTitle.h"
-#include "Scene/Play/ScenePlay.h"
-#include "Scene/Result/SceneResult.h"
 #include "Input/Input.h"
 
-SCENE_ID g_CurrentSceneId = SCENE_ID_INIT_TITLE;
+cScene SceneMng;
 
 // Win32アプリケーションは WinMain関数 から始まる
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -32,8 +29,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//一番最初に１回だけやる処理をここに書く
 
 	//クラスの宣言
-	cScene* Scene = nullptr;
 	Input input;
+
+	SceneMng.SceneInit();
 
 	//-----------------------------------------
 
@@ -55,92 +53,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//ここからゲームの本体を書くことになる
 		//-----------------------------------------
 		
-		switch (g_CurrentSceneId)
-		{
-
-		case SCENE_ID_INIT_TITLE:
-
-			Scene = new cTitle;
-			if (Scene) {
-				Scene->Init();
-			}
-
-			break;
-		case SCENE_ID_LOOP_TITLE:
-
-			if (Scene) {
-				Scene->Step();
-				Scene->Draw();
-			}
-
-
-			break;
-		case SCENE_ID_FIN_TITLE:
-			if (Scene) {
-				Scene->Fin();
-				delete Scene;
-				Scene = nullptr;
-			}
-			break;
-
-		case SCENE_ID_INIT_PLAY:
-
-			Scene = new cPlay;
-			if (Scene) {
-				Scene->Init();
-			}
-
-			break;
-		case SCENE_ID_LOOP_PLAY:
-
-			if (Scene) {
-				Scene->Step();
-				Scene->Draw();
-			}
-
-
-			break;
-		case SCENE_ID_FIN_PLAY:
-			if (Scene) {
-				Scene->Fin();
-				delete Scene;
-				Scene = nullptr;
-			}
-			break;
-
-		case SCENE_ID_INIT_RESULT:
-
-			Scene = new cResult;
-			if (Scene) {
-				Scene->Init();
-			}
-
-			break;
-		case SCENE_ID_LOOP_RESULT:
-
-			if (Scene) {
-				Scene->Step();
-				Scene->Draw();
-			}
-
-
-			break;
-		case SCENE_ID_FIN_RESULT:
-			if (Scene) {
-				Scene->Fin();
-				delete Scene;
-				Scene = nullptr;
-			}
-			break;
-		default:
-			break;
-		}
+		SceneMng.SceneLoop();
 
 		//-----------------------------------------
 		//ループの終わりに
 		//フリップ関数
 		ScreenFlip();
-
 	}
 
 	//-----------------------------------------

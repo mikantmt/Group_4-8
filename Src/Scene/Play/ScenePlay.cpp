@@ -4,8 +4,6 @@ void cPlay::Init()
 {
 	sound.Init();
 	player.Init();
-
-	g_CurrentSceneId = SCENE_ID_LOOP_PLAY;
 }
 
 void cPlay::Step()
@@ -13,7 +11,7 @@ void cPlay::Step()
 	player.Step();
 
 	if(input.IsKeyPush(KEY_INPUT_SPACE)) {
-		g_CurrentSceneId = SCENE_ID_FIN_PLAY;
+		cScene::SceneTypeID = SCENE_TYPE::TYPE_ID_FIN;
 	}
 }
 
@@ -29,5 +27,5 @@ void cPlay::Fin()
 	sound.Fin();
 	player.Fin();
 	
-	g_CurrentSceneId = SCENE_ID_INIT_RESULT;
+	cScene::SceneID = SCENE_ID::SCENE_ID_RESULT;
 }
