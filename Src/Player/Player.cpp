@@ -7,7 +7,7 @@
 #define WINDOW_X	(720)
 
 //プレイヤー画像パス
-#define PLAYER_PATH "Data/Player/player.h"
+#define PLAYER_PATH "Data/Player/player.png"
 
 #define GRAVITY (0.5f)	//重力加速度
 

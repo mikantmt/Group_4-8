@@ -5,15 +5,13 @@ const int MAPCIP_X_SIZE = 32;		//幅
 const int MAPCIP_Y_SIZE = 32;		//高さ
 const int MAP_SIZE = 32;			//サイズ
 
-const int MAPCIP_X_MAXNUM = 300;	//横方向の数
+const int MAPCIP_X_MAXNUM = 30;		//横方向の数
 const int MAPCIP_Y_MAXNUM = 25;		//縦方向の数
 
 //マップの種類
 enum MAP_TYPE
 {
 	MAP_TYPE_1 = 0,	//Map1
-	MAP_TYPE_2,
-	MAP_TYPE_3,
 
 	MAP_TYPE_NUM,
 };
@@ -23,10 +21,10 @@ enum MAPIMAGE_TYPE
 {
 	MAPIMAGE_TYPE_NONE = -1,	//何もない
 
-	MAPIMAGE_TYPE_FOOTIMG = 0,	//足場
-	MAPIMAGE_TYPE_PROP,			//支柱
-	MAPIMAGE_TYPE_CARROT,		//人参
-	MAPIMAGE_TYPE_SPRING,		//バネ
+	MAPIMAGE_TYPE_BLACK = 0,	//黒
+	MAPIMAGE_TYPE_GRAY,			//灰
+	MAPIMAGE_TYPE_TRAP,			//トラップ
+	MAPIMAGE_TYPE_NOSHING,		//なし
 
 	MAPIMAGE_TYPE_NUM,
 };
@@ -45,15 +43,13 @@ private:
 	//csvのファイルパス
 	const char CsvFilePath[MAP_TYPE_NUM][256] =
 	{
-		"Data/Map_csv/Map1.csv",	//MAP_TYPE_STAGE1
-		"Data/Map_csv/Map2.csv",
-		"Data/Map_csv/Map3.csv",
+		"Data/map/csv/map1.csv"	//MAP_TYPE_STAGE1
 	};
 
 	//マップチップのファイルパス
 	const char MapCipFilePath[MAPCIP_TYPE_NUM][256] =
 	{
-		"Data/Map/maps.png",	//Mapのマップチップ
+		"Data/map/map.png",	//Mapのマップチップ
 	};
 
 	//各マップチップの数

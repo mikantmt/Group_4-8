@@ -16,7 +16,7 @@ void cTitle::Step()
 
 void cTitle::Draw()
 {
-	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(255, 255, 255), "タイトル");
+	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(0, 255, 255), "タイトル");
 }
 
 void cTitle::Fin()

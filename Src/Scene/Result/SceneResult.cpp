@@ -14,7 +14,7 @@ void cResult::Step()
 
 void cResult::Draw()
 {
-	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(255, 255, 255), "リザルト");
+	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(0, 255, 255), "リザルト");
 }
 
 void cResult::Fin()

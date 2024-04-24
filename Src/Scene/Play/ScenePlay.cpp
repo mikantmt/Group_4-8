@@ -4,6 +4,7 @@ void cPlay::Init()
 {
 	sound.Init();
 	player.Init();
+	mapchip.Init();
 }
 
 void cPlay::Step()
@@ -17,7 +18,9 @@ void cPlay::Step()
 
 void cPlay::Draw()
 {
-	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(255, 255, 255), "プレイ");
+	mapchip.Draw(0);
+
+	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(0, 255, 255), "プレイ");
 
 	player.Draw();
 }
