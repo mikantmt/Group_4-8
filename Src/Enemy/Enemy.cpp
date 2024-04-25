@@ -31,9 +31,10 @@ void EnemyBase::Init() {
 	}
 }
 
-void EnemyBase::Step() {
+void EnemyBase::Step(float X) {
 	for (int FlyIndex = 0; FlyIndex < FLY_MAX_NUM; FlyIndex++) {
 		Fly[FlyIndex].Flip();//”½“]Ø‚è‘Ö‚¦
+		Fly[FlyIndex].FindPlayer(X);//ƒvƒŒƒCƒ„[‚ð’T‚·
 		if (!Fly[FlyIndex].DetecFlg) {//ƒvƒŒƒCƒ„[‚ð”­Œ©‚µ‚Ä‚¢‚È‚¯‚ê‚Î
 			if (Fly[FlyIndex].FlipFlg) {//”½“]‚³‚¹‚é
 				Fly[FlyIndex].EnemySaveX--;
@@ -86,6 +87,14 @@ void EnemyBase::Enemy::Flip() {
 	if (SpaceMaxX < GetPosX()) {
 		FlipFlg = true;
 	}
+}
+
+void EnemyBase::Enemy::FindPlayer(float X) {
+	if (EnemyX + MAPCIP_X_SIZE * 10 > X && EnemyX - MAPCIP_X_SIZE * 10 < X) {
+		DetecFlg = true;
+	}
+	else
+		DetecFlg = false;
 }
 
 void EnemyBase::Update(){

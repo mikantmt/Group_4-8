@@ -12,7 +12,7 @@ void cPlay::Step()
 {
 	screen.StepScreen(player.GetPosX(), player.GetPosY());
 
-	enemy.Step();
+	enemy.Step(player.GetPosX());
 
 	player.Step();
 

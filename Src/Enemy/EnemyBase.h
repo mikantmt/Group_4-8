@@ -69,14 +69,17 @@ public:
 
 		void SetSpace(float X);	//移動幅を設定
 
-		void Flip();
+		void Flip();			//敵の折り返しフラグを切り替える
+
+		//敵の座標から10マス以内にいたら発見されたことになる
+		void FindPlayer(float X);
 	};
 
 	Enemy Fly	[FLY_MAX_NUM];	  //空上の敵宣言
 	Enemy Ground[GROUND_MAX_NUM]; //陸上の敵宣言
 
 	void Init();
-	void Step();
+	void Step(float X);
 	void Draw(int X);
 	void Fin();
 
