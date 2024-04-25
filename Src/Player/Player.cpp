@@ -35,10 +35,10 @@ void Player::Step() {
 
 	//プレイヤー左右移動処理
 	if (input.IsKeyKeep(KEY_INPUT_D)) {
-		playerNext_x++;
+		playerNext_x += 3;
 	}
 	else if (input.IsKeyKeep(KEY_INPUT_A)) {
-		playerNext_x--;
+		playerNext_x -= 3;
 	}
 
 	//スペースキーが押されたらジャンプ

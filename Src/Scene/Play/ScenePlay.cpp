@@ -4,6 +4,7 @@ void cPlay::Init()
 {
 	sound.Init();
 	player.Init();
+	enemy.Init();
 	mapchip.Init();
 }
 
@@ -11,11 +12,15 @@ void cPlay::Step()
 {
 	screen.StepScreen(player.GetPosX(), player.GetPosY());
 
+	enemy.Step();
+
 	player.Step();
 
 	MapCollision();
 
 	player.UpdatePos();
+
+	enemy.Update();
 
 	if(player.ActiveFlg) {
 		cScene::SceneTypeID = SCENE_TYPE::TYPE_ID_FIN;
@@ -27,6 +32,8 @@ void cPlay::Draw()
 	mapchip.Draw(screen.GetScreenX());
 
 	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(0, 255, 255), "ƒvƒŒƒC");
+
+	enemy.Draw(screen.GetScreenX());
 
 	player.Draw(screen.GetScreenX());
 }

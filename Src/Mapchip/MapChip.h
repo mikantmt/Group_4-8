@@ -5,7 +5,7 @@ const int MAPCIP_X_SIZE = 32;		//幅
 const int MAPCIP_Y_SIZE = 32;		//高さ
 const int MAP_SIZE = 32;			//サイズ
 
-const int MAPCIP_X_MAXNUM = 30;		//横方向の数
+const int MAPCIP_X_MAXNUM = 300;	//横方向の数
 const int MAPCIP_Y_MAXNUM = 25;		//縦方向の数
 
 //マップの種類
