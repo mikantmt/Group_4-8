@@ -1,5 +1,8 @@
 #pragma once
 
+const int PLAYER_HEIGHT = 32;
+const int PLAYER_WIDTH = 32;
+
 enum Animation {
 	R,//右
 	L //左
@@ -12,11 +15,13 @@ protected:
 	int playerHan = 0;			//プレイヤー画像
 	int player_x  = 0;			//プレイヤー座標X
 	int player_y  = 0;			//プレイヤー座標Y
+	int playerNext_x  = 0;			//プレイヤー次座標X
+	int playerNext_y  = 0;			//プレイヤー次座標Y
 	const int playeranim = 11;	//プレイヤーのアニメーション数
-	const int playerSize = 64;	//プレイヤー画像サイズ
+	const int playerSize = 32;	//プレイヤー画像サイズ
 
 	bool isUp		 = false;	//プレイヤーが上昇中か調べるフラグ
-	float Yspeed	 = 0.0f;	//ジャンプ用
+	//float Yspeed = 0.0f;	//ジャンプ用
 	float jump_power = 7.0f;	//ジャンプ量
 
 	int animState     = 0;		//右向きか左向きか
@@ -31,6 +36,9 @@ public:
 	//歩いているときのサウンド
 	int Walk_Sound[13] = { 0 };
 
+	float Yspeed = 0.0f;	//ジャンプ用
+	bool  ActiveFlg;	//生存フラグ
+
 	Player();
 	~Player();
 
@@ -41,10 +49,26 @@ public:
 	void Step();
 
 	//描画処理
-	void Draw();
+	void Draw(int X);
 
 	//終了処理
 	void Fin();
+
+	//座標の更新
+	void SetNextPosX(int _posX);
+	void SetNextPosY(int _posX);
+	void UpdatePos();
+
+	// 移動後の座標を取得
+	int GetNextPosX() { return playerNext_x; }
+	int GetNextPosY() { return playerNext_y; }
+
+	// 現在の座標を取得
+	float GetPosX() { return player_x; }
+	float GetPosY() { return player_y; }
+
+	//プレイヤーの進んでいる方向を取得
+	void GetMoveDirection(bool* _dirArray);
 
 	//プレイヤー
 	//プレイヤーのｘ座標を得る

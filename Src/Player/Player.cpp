@@ -9,7 +9,7 @@
 //プレイヤー画像パス
 #define PLAYER_PATH "Data/Player/player.png"
 
-#define GRAVITY (0.5f)	//重力加速度
+#define GRAVITY (0.3f)	//重力加速度
 
 Input input;
 
@@ -24,16 +24,21 @@ Player::~Player() {}
 //初期化
 void Player::Init() {
 	playerHan = LoadGraph(PLAYER_PATH);
+
+	ActiveFlg = false;
 }
 
 //通常処理
 void Player::Step() {
+	playerNext_x = player_x;
+	playerNext_y = player_y;
+
 	//プレイヤー左右移動処理
-	if (input.IsKeyPush(KEY_INPUT_D)) {
-		player_x++;
+	if (input.IsKeyKeep(KEY_INPUT_D)) {
+		playerNext_x++;
 	}
-	else if (input.IsKeyPush(KEY_INPUT_A)) {
-		player_x--;
+	else if (input.IsKeyKeep(KEY_INPUT_A)) {
+		playerNext_x--;
 	}
 
 	//スペースキーが押されたらジャンプ
@@ -45,16 +50,53 @@ void Player::Step() {
 	//重力を与える
 	isUp = false;
 	Yspeed += GRAVITY;
-	player_y += Yspeed;
+	playerNext_y += Yspeed;
 }
 
 //描画
-void Player::Draw() {
+void Player::Draw(int X) {
 	//プレイヤーを描画
-	DrawGraph(player_x, player_y, playerHan, true);
+	DrawGraph(player_x - X, player_y, playerHan, true);
 }
 
 //終了
 void Player::Fin() {
 
 }
+
+void Player::SetNextPosX(int _posX) {
+	playerNext_x = (float)_posX;
+}
+
+void Player::SetNextPosY(int _posY) {
+	playerNext_y = (float)_posY;
+}
+
+void Player::UpdatePos() {
+	player_x = playerNext_x;
+	player_y = playerNext_y;
+}
+
+void Player::GetMoveDirection(bool* _dirArray) {
+	// 右方向のチェック
+	if (playerNext_x > player_x) {
+		_dirArray[3] = true;
+	}
+
+	// 左方向のチェック
+	if (playerNext_x < player_x) {
+		_dirArray[2] = true;
+	}
+
+	// 下方向のチェック
+	if (playerNext_y > player_y) {
+		_dirArray[1] = true;
+	}
+
+	// 上方向のチェック
+	if (playerNext_y < player_y) {
+		_dirArray[0] = true;
+	}
+}
+
+
