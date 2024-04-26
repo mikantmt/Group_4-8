@@ -34,6 +34,8 @@ void Player::Step() {
 	playerNext_x = player_x;
 	playerNext_y = player_y;
 
+	IsHide = false;
+
 	//プレイヤー左右移動処理
 	if (input.IsKeyKeep(KEY_INPUT_D)) {
 		playerNext_x += 3;

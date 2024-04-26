@@ -12,11 +12,11 @@ void cPlay::Step()
 {
 	screen.StepScreen(player.GetPosX(), player.GetPosY());
 
-	enemy.Step(player.GetPosX(),player.IsHide);
-
 	player.Step();
 
 	MapCollision();
+
+	enemy.Step(player.GetNextPosX(), player.IsHide);
 
 	player.UpdatePos();
 
@@ -32,6 +32,12 @@ void cPlay::Draw()
 	mapchip.Draw(screen.GetScreenX());
 
 	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(0, 255, 255), "プレイ");
+
+	if (player.IsHide) {
+		DrawFormatString(0, 0, GetColor(255, 0, 0), "隠れている");
+	}
+	else
+		DrawFormatString(0, 0, GetColor(255, 0, 0), "隠れていない");
 
 	enemy.Draw(screen.GetScreenX());
 
@@ -135,30 +141,33 @@ void cPlay::MapCollision() {
 
 			// 当たっているかチェック
 			if (collision.IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
-				// 左方向の修正
-				if (dirArray[2]) {
-					player.IsHide = true;
+				if (!dirArray[3]) {
+					// 左方向の修正
+					if (dirArray[2]) {
+						player.IsHide = true;
 
-					// ★ここを考える
-					// めり込み量を計算する
-					float overlap = Bx + Bw - Ax;
-					player.SetNextPosX(Ax + overlap);
+						// ★ここを考える
+						// めり込み量を計算する
+						float overlap = Bx + Bw - Ax;
+						player.SetNextPosX(Ax + overlap);
+					}
+					else {
+						player.IsHide = false;
+					}
 				}
-				else {
-					player.IsHide = false;
-				}
+				if (!dirArray[2]) {
+					// 右方向の修正
+					if (dirArray[3]) {
+						player.IsHide = true;
 
-				// 右方向の修正
-				if (dirArray[3]) {
-					player.IsHide = true;
-
-					// ★ここを考える
-					// めり込み量を計算する
-					float overlap = Ax + Aw - Bx;
-					player.SetNextPosX(Ax - overlap);
-				}
-				else {
-					player.IsHide = false;
+						// ★ここを考える
+						// めり込み量を計算する
+						float overlap = Ax + Aw - Bx;
+						player.SetNextPosX(Ax - overlap);
+					}
+					else {
+						player.IsHide = false;
+					}
 				}
 			}
 		}
