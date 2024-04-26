@@ -26,6 +26,7 @@ void Player::Init() {
 	playerHan = LoadGraph(PLAYER_PATH);
 
 	ActiveFlg = false;
+	IsHide = false;
 }
 
 //’Êíˆ—

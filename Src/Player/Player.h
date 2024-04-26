@@ -37,7 +37,8 @@ public:
 	int Walk_Sound[13] = { 0 };
 
 	float Yspeed = 0.0f;	//ジャンプ用
-	bool  ActiveFlg;	//生存フラグ
+	bool  ActiveFlg;		//生存フラグ
+	bool  IsHide;			//隠れている(初期値はfalse)
 
 	Player();
 	~Player();

@@ -2,6 +2,7 @@
 #include "../Collision/Collision.h"
 #include "../Random/Random.h"
 #include "../Mapchip/MapChip.h"
+#include "../Player/Player.h"
 
 const int FLY_MAX_NUM	 = 10;	//同時に存在できる敵の数
 const int GROUND_MAX_NUM = 10;	//同時に存在できる敵の数
@@ -33,6 +34,7 @@ private:
 
 	Collision collision;
 	Random	  random;
+	Player	  player;
 
 public:
 
@@ -53,6 +55,7 @@ public:
 		bool FlipFlg;		//反転フラグ(初期値はfalse)
 
 		bool DetecFlg;		//プレイヤー発見フラグ(初期値はfalse)
+		bool PlayerHide;	//プレイヤーが隠れているか
 
 		//座標取得
 		float GetPosX()		{ return EnemyX; }
@@ -73,13 +76,16 @@ public:
 
 		//敵の座標から10マス以内にいたら発見されたことになる
 		void FindPlayer(float X);
+
+		//Hideを取得
+		void GetHide(bool hide);
 	};
 
 	Enemy Fly	[FLY_MAX_NUM];	  //空上の敵宣言
 	Enemy Ground[GROUND_MAX_NUM]; //陸上の敵宣言
 
 	void Init();
-	void Step(float X);
+	void Step(float X, bool hide);
 	void Draw(int X);
 	void Fin();
 

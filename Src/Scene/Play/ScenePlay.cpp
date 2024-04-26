@@ -12,7 +12,7 @@ void cPlay::Step()
 {
 	screen.StepScreen(player.GetPosX(), player.GetPosY());
 
-	enemy.Step(player.GetPosX());
+	enemy.Step(player.GetPosX(),player.IsHide);
 
 	player.Step();
 
@@ -137,18 +137,28 @@ void cPlay::MapCollision() {
 			if (collision.IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
 				// ¶•ûŒü‚ÌC³
 				if (dirArray[2]) {
+					player.IsHide = true;
+
 					// š‚±‚±‚ğl‚¦‚é
 					// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
 					float overlap = Bx + Bw - Ax;
 					player.SetNextPosX(Ax + overlap);
 				}
+				else {
+					player.IsHide = false;
+				}
 
 				// ‰E•ûŒü‚ÌC³
 				if (dirArray[3]) {
+					player.IsHide = true;
+
 					// š‚±‚±‚ğl‚¦‚é
 					// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
 					float overlap = Ax + Aw - Bx;
 					player.SetNextPosX(Ax - overlap);
+				}
+				else {
+					player.IsHide = false;
 				}
 			}
 		}

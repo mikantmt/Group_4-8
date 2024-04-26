@@ -15,12 +15,13 @@ void EnemyBase::Init() {
 		Fly[FlyIndex].DetecFlg = false;
 
 		Fly[FlyIndex].SetSpace(Fly[FlyIndex].EnemyX);
+		Fly[FlyIndex].PlayerHide = false;
 	}
 
 	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
 		Ground[GroundIndex].Handle = LoadGraph(EnemyPath[GROUND_ENEMY]);
 
-		Ground[GroundIndex].EnemyX = random.ScopingRand(25.0f * (float)MAPCIP_X_SIZE, (float)(MAPCIP_X_MAXNUM * MAPCIP_X_SIZE));
+		Ground[GroundIndex].EnemyX = random.ScopingRand(10.0f * (float)MAPCIP_X_SIZE, (float)(MAPCIP_X_MAXNUM * MAPCIP_X_SIZE));
 		Ground[GroundIndex].EnemyY = 128;
 
 		Ground[GroundIndex].EnemySaveX = Ground[GroundIndex].EnemyX;
@@ -31,16 +32,28 @@ void EnemyBase::Init() {
 	}
 }
 
-void EnemyBase::Step(float X) {
+void EnemyBase::Step(float X,bool hide) {
 	for (int FlyIndex = 0; FlyIndex < FLY_MAX_NUM; FlyIndex++) {
 		Fly[FlyIndex].Flip();//反転切り替え
 		Fly[FlyIndex].FindPlayer(X);//プレイヤーを探す
+		Fly[FlyIndex].GetHide(hide);
+		
 		if (!Fly[FlyIndex].DetecFlg) {//プレイヤーを発見していなければ
 			if (Fly[FlyIndex].FlipFlg) {//反転させる
 				Fly[FlyIndex].EnemySaveX--;
 			}
 			else {
 				Fly[FlyIndex].EnemySaveX++;
+			}
+		}
+		else {//プレイヤーを発見していれば
+			if (Fly[FlyIndex].PlayerHide) {//プレイヤーが隠れていれば動かす
+				if (Fly[FlyIndex].FlipFlg) {//反転させる
+					Fly[FlyIndex].EnemySaveX--;
+				}
+				else {
+					Fly[FlyIndex].EnemySaveX++;
+				}
 			}
 		}
 	}
@@ -95,6 +108,10 @@ void EnemyBase::Enemy::FindPlayer(float X) {
 	}
 	else
 		DetecFlg = false;
+}
+
+void  EnemyBase::Enemy::GetHide(bool hide) {
+	PlayerHide = hide;
 }
 
 void EnemyBase::Update(){
