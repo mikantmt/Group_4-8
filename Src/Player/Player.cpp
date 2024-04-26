@@ -24,6 +24,7 @@ Player::~Player() {}
 //初期化
 void Player::Init() {
 	playerHan = LoadGraph(PLAYER_PATH);
+	playerHideHan = LoadGraph("Data/Player/PlayerHide.png");
 
 	ActiveFlg = false;
 	IsHide = false;
@@ -59,7 +60,12 @@ void Player::Step() {
 //描画
 void Player::Draw(int X) {
 	//プレイヤーを描画
-	DrawGraph(player_x - X, player_y, playerHan, true);
+	if (!IsHide) {
+		DrawGraph(player_x - X, player_y, playerHan, false);
+	}
+	else
+		DrawGraph(player_x - X, player_y, playerHideHan, false);
+	
 }
 
 //終了

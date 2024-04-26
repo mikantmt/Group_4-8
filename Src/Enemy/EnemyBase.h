@@ -23,7 +23,7 @@ private:
 
 	const char EnemyPath[ENEMY_EYPE_NUM][256]{
 		"Data/Enemy/Fly.png",
-		"Data/",
+		"Data/Enemy/Ground.png",
 	};
 
 	//今回はランダム生成なので使わない
@@ -70,12 +70,14 @@ public:
 		//進んでいる方向をチェック
 		void GetMoveDirection(bool* dirArray);
 
-		void SetSpace(float X);	//移動幅を設定
+		//移動幅を設定
+		void SetSpace(float X);	
 
-		void Flip();			//敵の折り返しフラグを切り替える
+		void FlipPlus();	//敵の折り返しフラグを切り替える(プラス方向へ)
+		void FlipMinus();	//敵の折り返しフラグを切り替える(マイナス方向へ)
 
-		//敵の座標から10マス以内にいたら発見されたことになる
-		void FindPlayer(float X);
+		//敵の座標から指定範囲マス以内にいたら発見されたことになる
+		void FindPlayer(float X, float Scale); 
 
 		//Hideを取得
 		void GetHide(bool hide);
@@ -85,7 +87,7 @@ public:
 	Enemy Ground[GROUND_MAX_NUM]; //陸上の敵宣言
 
 	void Init();
-	void Step(float X, bool hide);
+	void Step(float X, float Y, bool hide);
 	void Draw(int X);
 	void Fin();
 

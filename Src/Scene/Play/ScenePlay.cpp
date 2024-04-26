@@ -16,7 +16,7 @@ void cPlay::Step()
 
 	MapCollision();
 
-	enemy.Step(player.GetNextPosX(), player.IsHide);
+	enemy.Step(player.GetNextPosX(),player.GetNextPosY(), player.IsHide);
 
 	player.UpdatePos();
 
@@ -38,6 +38,10 @@ void cPlay::Draw()
 	}
 	else
 		DrawFormatString(0, 0, GetColor(255, 0, 0), "‰B‚ê‚Ä‚¢‚È‚¢");
+
+	/*DrawFormatString(0, 16, GetColor(0, 255, 255), "%d",player.GetNextPosY());*/
+
+
 
 	enemy.Draw(screen.GetScreenX());
 

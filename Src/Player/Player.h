@@ -13,6 +13,7 @@ class Player {
 protected:
 	//プレイヤー変数
 	int playerHan = 0;			//プレイヤー画像
+	int playerHideHan = 0;
 	int player_x  = 0;			//プレイヤー座標X
 	int player_y  = 0;			//プレイヤー座標Y
 	int playerNext_x  = 0;			//プレイヤー次座標X

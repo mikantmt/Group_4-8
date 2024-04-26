@@ -22,24 +22,28 @@ void EnemyBase::Init() {
 		Ground[GroundIndex].Handle = LoadGraph(EnemyPath[GROUND_ENEMY]);
 
 		Ground[GroundIndex].EnemyX = random.ScopingRand(10.0f * (float)MAPCIP_X_SIZE, (float)(MAPCIP_X_MAXNUM * MAPCIP_X_SIZE));
-		Ground[GroundIndex].EnemyY = 128;
+		Ground[GroundIndex].EnemyY = 608;
 
 		Ground[GroundIndex].EnemySaveX = Ground[GroundIndex].EnemyX;
 		Ground[GroundIndex].EnemySaveY = Ground[GroundIndex].EnemyY;
 
 		Ground[GroundIndex].FlipFlg = false;
 		Ground[GroundIndex].DetecFlg = false;
+
+		Ground[GroundIndex].SetSpace(Ground[GroundIndex].EnemyX);
 	}
 }
 
-void EnemyBase::Step(float X,bool hide) {
+void EnemyBase::Step(float X,float Y,bool hide) {
+
+	//ãÛè„ÇÃìG
 	for (int FlyIndex = 0; FlyIndex < FLY_MAX_NUM; FlyIndex++) {
-		Fly[FlyIndex].Flip();//îΩì]êÿÇËë÷Ç¶
-		Fly[FlyIndex].FindPlayer(X);//ÉvÉåÉCÉÑÅ[ÇíTÇ∑
+		Fly[FlyIndex].FlipPlus();//îΩì]êÿÇËë÷Ç¶
+		Fly[FlyIndex].FindPlayer(X,10);//ÉvÉåÉCÉÑÅ[ÇíTÇ∑
 		Fly[FlyIndex].GetHide(hide);
 		
 		if (!Fly[FlyIndex].DetecFlg) {//ÉvÉåÉCÉÑÅ[Çî≠å©ÇµÇƒÇ¢Ç»ÇØÇÍÇŒ
-			if (Fly[FlyIndex].FlipFlg) {//îΩì]Ç≥ÇπÇÈ
+			if (!Fly[FlyIndex].FlipFlg) {//îΩì]Ç≥ÇπÇÈ
 				Fly[FlyIndex].EnemySaveX--;
 			}
 			else {
@@ -57,11 +61,32 @@ void EnemyBase::Step(float X,bool hide) {
 			}
 		}
 	}
+
+	//ó§è„ÇÃìG
+	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
+		Ground[GroundIndex].FlipMinus();
+		Ground[GroundIndex].FindPlayer(X,7);//ÉvÉåÉCÉÑÅ[ÇíTÇ∑
+		if (!Ground[GroundIndex].DetecFlg) {//ÉvÉåÉCÉÑÅ[Çî≠å©ÇµÇƒÇ¢Ç»ÇØÇÍÇŒ
+			
+		}
+		else {//î≠å©ÇµÇƒÇ¢ÇÍÇŒ
+			if (!Ground[GroundIndex].FlipFlg) {
+				Ground[GroundIndex].EnemySaveX -= 3;
+			}
+			else
+				Ground[GroundIndex].EnemySaveX += 3;
+		}
+	}
 }
 
 void EnemyBase::Draw(int X) {
+	//ãÛè„
 	for (int FlyIndex = 0; FlyIndex < FLY_MAX_NUM; FlyIndex++) {
 		DrawGraph(Fly[FlyIndex].EnemyX - X, Fly[FlyIndex].EnemyY, Fly[FlyIndex].Handle, true);
+	}
+	//ó§è„
+	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
+		DrawGraph(Ground[GroundIndex].EnemyX - X, Ground[GroundIndex].EnemyY, Ground[GroundIndex].Handle, true);
 	}
 }
 
@@ -93,7 +118,7 @@ void EnemyBase::Enemy::SetSpace(float X) {
 	SpaceMaxX = X + MOVE_RANGE;
 }
 
-void EnemyBase::Enemy::Flip() {
+void EnemyBase::Enemy::FlipPlus() {
 	if (SpaceMinX > GetPosX()) {
 		FlipFlg = false;
 	}
@@ -102,8 +127,17 @@ void EnemyBase::Enemy::Flip() {
 	}
 }
 
-void EnemyBase::Enemy::FindPlayer(float X) {
-	if (EnemyX + MAPCIP_X_SIZE * 10 > X && EnemyX - MAPCIP_X_SIZE * 10 < X) {
+void EnemyBase::Enemy::FlipMinus() {
+	if (SpaceMinX > GetPosX()) {
+		FlipFlg = true;
+	}
+	if (SpaceMaxX < GetPosX()) {
+		FlipFlg = false;
+	}
+}
+
+void EnemyBase::Enemy::FindPlayer(float X,float Scale) {
+	if (EnemyX + MAPCIP_X_SIZE * Scale > X && EnemyX - MAPCIP_X_SIZE * Scale < X) {
 		DetecFlg = true;
 	}
 	else
@@ -121,7 +155,7 @@ void EnemyBase::Update(){
 	}
 
 	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
-		Fly[GroundIndex].EnemyX = Fly[GroundIndex].EnemySaveX;
-		Fly[GroundIndex].EnemyY = Fly[GroundIndex].EnemySaveY;
+		Ground[GroundIndex].EnemyX = Ground[GroundIndex].EnemySaveX;
+		Ground[GroundIndex].EnemyY = Ground[GroundIndex].EnemySaveY;
 	}
 }
