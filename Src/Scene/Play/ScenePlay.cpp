@@ -182,7 +182,9 @@ void cPlay::MapCollision() {
 	{
 		for (int mapIndexX = 0; mapIndexX < MAPCIP_X_MAXNUM; mapIndexX++)
 		{
-			if (mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 1 || mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 2)
+			if (mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 1 
+				|| mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 2 
+				|| mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 3)
 			{
 				int Bx = mapIndexX * MAPCIP_X_SIZE;
 				int By = mapIndexY * MAPCIP_Y_SIZE;
@@ -195,4 +197,17 @@ void cPlay::MapCollision() {
 			}
 		}
 	}
+
+	/*Time++;
+	if (Time > 60.0f) {
+		Time = 0.0f;
+		for (int MapChipYIndex = 0; MapChipYIndex < MAPCIP_Y_MAXNUM; MapChipYIndex++) {
+			for (int MapChipXIndex = 0; MapChipXIndex < MAPCIP_X_MAXNUM; MapChipXIndex++) {
+				if (mapchip.m_FileReadMapData[MapChipYIndex][MapChipXIndex] == 2) {
+					mapchip.m_FileReadMapData[MapChipYIndex][MapChipXIndex] = -1;
+				}
+			}
+		}
+		
+	}*/
 }

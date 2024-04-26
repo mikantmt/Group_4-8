@@ -13,7 +13,7 @@ void MapChip::Init() {
 }
 
 void MapChip::Step() {
-
+	
 }
 
 void MapChip::Draw(int X) {

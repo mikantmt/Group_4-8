@@ -23,8 +23,14 @@ enum MAPIMAGE_TYPE
 
 	MAPIMAGE_TYPE_BLACK = 0,	//黒
 	MAPIMAGE_TYPE_GRAY,			//灰
-	MAPIMAGE_TYPE_TRAP,			//トラップ
-	MAPIMAGE_TYPE_NOSHING,		//なし
+	MAPIMAGE_TYPE_TRAP1,		//トラップ
+	MAPIMAGE_TYPE_TRAP2,		//トラップ
+	MAPIMAGE_TYPE_NOSHING1,		//なし
+	MAPIMAGE_TYPE_NOSHING2,		//なし
+	MAPIMAGE_TYPE_NOSHING3,		//なし
+	MAPIMAGE_TYPE_NOSHING4,		//なし
+	MAPIMAGE_TYPE_NOSHING5,		//なし
+
 
 	MAPIMAGE_TYPE_NUM,
 };
@@ -61,7 +67,7 @@ private:
 	//各マップチップの画像分割数 [0] = x, [1] = y
 	const int MapCipImageSplitNum[MAPCIP_TYPE_NUM][2] =
 	{
-		{ 2, 2,},	//Map
+		{ 3, 3,},	//Map
 	};
 
 	int MapCipHandle[MAPIMAGE_TYPE_NUM];
