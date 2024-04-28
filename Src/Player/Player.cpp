@@ -54,7 +54,7 @@ void Player::Step() {
 	//èdóÕÇó^Ç¶ÇÈ
 	isUp = false;
 	Yspeed += GRAVITY;
-	playerNext_y += Yspeed;
+	playerNext_y += (int)Yspeed;
 }
 
 //ï`âÊ
@@ -74,11 +74,11 @@ void Player::Fin() {
 }
 
 void Player::SetNextPosX(int _posX) {
-	playerNext_x = (float)_posX;
+	playerNext_x = _posX;
 }
 
 void Player::SetNextPosY(int _posY) {
-	playerNext_y = (float)_posY;
+	playerNext_y = _posY;
 }
 
 void Player::UpdatePos() {

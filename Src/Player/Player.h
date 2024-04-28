@@ -66,8 +66,8 @@ public:
 	int GetNextPosY() { return playerNext_y; }
 
 	// 現在の座標を取得
-	float GetPosX() { return player_x; }
-	float GetPosY() { return player_y; }
+	float GetPosX() { return (float)player_x; }
+	float GetPosY() { return (float)player_y; }
 
 	//プレイヤーの進んでいる方向を取得
 	void GetMoveDirection(bool* _dirArray);

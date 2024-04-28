@@ -13,13 +13,13 @@ void cPlay::Step()
 	screen.StepScreen(player.GetPosX(), player.GetPosY());
 
 	player.Step();
-	enemy.Step(player.GetNextPosX(), player.GetNextPosY(), player.IsHide);
+	enemy.Step((float)player.GetNextPosX(), (float)player.GetNextPosY());
 
 	MapCollision();
 
 	MapCollisionEnemy();
 
-	
+	enemy.Step((float)player.GetNextPosX(), (float)player.GetNextPosY(), player.IsHide);
 
 	player.UpdatePos();
 
@@ -32,23 +32,11 @@ void cPlay::Step()
 
 void cPlay::Draw()
 {
-	mapchip.Draw(screen.GetScreenX());
+	mapchip.Draw((int)screen.GetScreenX());
 
-	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(0, 255, 255), "プレイ");
+	enemy.Draw((int)screen.GetScreenX());
 
-	if (player.IsHide) {
-		DrawFormatString(0, 0, GetColor(255, 0, 0), "隠れている");
-	}
-	else
-		DrawFormatString(0, 0, GetColor(255, 0, 0), "隠れていない");
-
-	/*DrawFormatString(0, 16, GetColor(0, 255, 255), "%d",player.GetNextPosY());*/
-
-
-
-	enemy.Draw(screen.GetScreenX());
-
-	player.Draw(screen.GetScreenX());
+	player.Draw((int)screen.GetScreenX());
 }
 
 void cPlay::Fin()
@@ -89,17 +77,17 @@ void cPlay::MapCollision() {
 			int Bh = MAP_SIZE;
 
 			// ※Y方向のみに移動したと仮定した座標で当たり判定をチェックします
-			Ay = player.GetNextPosY();
-			Ax = player.GetPosX();
+			Ay = (float)player.GetNextPosY();
+			Ax = (float)player.GetPosX();
 
 			// 当たっているかチェック
-			if (collision.IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
+			if (collision.IsHitRect(Ax, Ay, Aw, Ah, (float)Bx, (float)By, (float)Bw, (float)Bh)) {
 				// 上方向の修正
 				if (dirArray[0]) {
 					// ★ここを考える
 					// めり込み量を計算する
 					float overlap = By + Bh - Ay;
-					player.SetNextPosY(Ay + overlap);
+					player.SetNextPosY((int)(Ay + overlap));
 				}
 
 				// 下方向の修正
@@ -107,7 +95,7 @@ void cPlay::MapCollision() {
 					// ★ここを考える
 					// めり込み量を計算する
 					float overlap = Ay + Ah - By;
-					player.SetNextPosY(Ay - overlap);
+					player.SetNextPosY((int)(Ay - overlap));
 					player.Yspeed = 0.0f;
 				}
 			}
@@ -143,11 +131,11 @@ void cPlay::MapCollision() {
 			int Bh = MAP_SIZE;
 
 			// ※X方向のみに移動したと仮定した座標で当たり判定をチェックします
-			Ay = player.GetNextPosY();
-			Ax = player.GetNextPosX();
+			Ay = (float)player.GetNextPosY();
+			Ax = (float)player.GetNextPosX();
 
 			// 当たっているかチェック
-			if (collision.IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
+			if (collision.IsHitRect(Ax, Ay, Aw, Ah, (float)Bx, (float)By, (float)Bw, (float)Bh)) {
 				if (!dirArray[3]) {
 					// 左方向の修正
 					if (dirArray[2]) {
@@ -156,7 +144,7 @@ void cPlay::MapCollision() {
 						// ★ここを考える
 						// めり込み量を計算する
 						float overlap = Bx + Bw - Ax;
-						player.SetNextPosX(Ax + overlap);
+						player.SetNextPosX((int)(Ax + overlap));
 					}
 					else {
 						player.IsHide = false;
@@ -170,7 +158,7 @@ void cPlay::MapCollision() {
 						// ★ここを考える
 						// めり込み量を計算する
 						float overlap = Ax + Aw - Bx;
-						player.SetNextPosX(Ax - overlap);
+						player.SetNextPosX((int)(Ax - overlap));
 					}
 					else {
 						player.IsHide = false;
@@ -194,7 +182,7 @@ void cPlay::MapCollision() {
 				int Bw = MAP_SIZE;
 				int Bh = MAP_SIZE;
 
-				if (collision.IsHitRect(player.GetNextPosX(), player.GetNextPosY(), PLAYER_WIDTH, PLAYER_HEIGHT, Bx, By, Bw, Bh)) {
+				if (collision.IsHitRect((float)player.GetNextPosX(), (float)player.GetNextPosY(), (float)PLAYER_WIDTH, (float)PLAYER_HEIGHT, (float)Bx, (float)By, (float)Bw, (float)Bh)) {
 					player.ActiveFlg = true;
 				}
 			}

@@ -78,8 +78,7 @@ public:
 		//移動幅を設定
 		void SetSpace(float X);	
 
-		void FlipPlus();	//敵の折り返しフラグを切り替える(プラス方向へ)
-		void FlipMinus();	//敵の折り返しフラグを切り替える(マイナス方向へ)
+		void Flip();	//敵の折り返しフラグを切り替える(マイナス方向へ)
 
 		//敵の座標から指定範囲マス以内にいたら発見されたことになる
 		void FindPlayer(float X, float Scale); 
@@ -92,7 +91,10 @@ public:
 	Enemy Ground[GROUND_MAX_NUM]; //陸上の敵宣言
 
 	void Init();
+	
 	void Step(float X, float Y, bool hide);
+	void Step(float X, float Y);
+
 	void Draw(int X);
 
 	void MapToEnemyX(int X,int Y);

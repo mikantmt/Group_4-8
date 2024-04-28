@@ -39,7 +39,7 @@ void EnemyBase::Step(float X,float Y,bool hide) {
 
 	//空上の敵
 	for (int FlyIndex = 0; FlyIndex < FLY_MAX_NUM; FlyIndex++) {
-		Fly[FlyIndex].FlipPlus();//反転切り替え
+		Fly[FlyIndex].Flip();//反転切り替え
 		Fly[FlyIndex].FindPlayer(X,10);//プレイヤーを探す
 		Fly[FlyIndex].GetHide(hide);
 		
@@ -52,8 +52,8 @@ void EnemyBase::Step(float X,float Y,bool hide) {
 			}
 		}
 		else {//プレイヤーを発見していれば
-			if (Fly[FlyIndex].PlayerHide) {//プレイヤーが隠れていれば動かす
-				if (Fly[FlyIndex].FlipFlg) {//反転させる
+ 			if (Fly[FlyIndex].PlayerHide) {//プレイヤーが隠れていれば動かす
+				if (!Fly[FlyIndex].FlipFlg) {//反転させる
 					Fly[FlyIndex].EnemySaveX--;
 				}
 				else {
@@ -62,15 +62,17 @@ void EnemyBase::Step(float X,float Y,bool hide) {
 			}
 		}
 	}
+}
 
+void EnemyBase::Step(float X, float Y) {
 	//陸上の敵
 	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
 		Ground[GroundIndex].YSpeed += MOVE_YSPEED;
 		Ground[GroundIndex].EnemySaveY += Ground[GroundIndex].YSpeed;
-		Ground[GroundIndex].FlipMinus();
-		Ground[GroundIndex].FindPlayer(X,7);//プレイヤーを探す
+		Ground[GroundIndex].Flip();
+		Ground[GroundIndex].FindPlayer(X, 7);//プレイヤーを探す
 		if (!Ground[GroundIndex].DetecFlg) {//プレイヤーを発見していなければ
-			
+
 		}
 		else {//発見していれば
 			if (!Ground[GroundIndex].FlipFlg) {
@@ -121,16 +123,7 @@ void EnemyBase::Enemy::SetSpace(float X) {
 	SpaceMaxX = X + MOVE_RANGE;
 }
 
-void EnemyBase::Enemy::FlipPlus() {
-	if (SpaceMinX > GetPosX()) {
-		FlipFlg = false;
-	}
-	if (SpaceMaxX < GetPosX()) {
-		FlipFlg = true;
-	}
-}
-
-void EnemyBase::Enemy::FlipMinus() {
+void EnemyBase::Enemy::Flip() {
 	if (SpaceMinX > GetPosX()) {
 		FlipFlg = true;
 	}
