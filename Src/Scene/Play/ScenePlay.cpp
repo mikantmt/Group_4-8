@@ -41,8 +41,6 @@ void cPlay::Draw()
 
 	/*DrawFormatString(0, 16, GetColor(0, 255, 255), "%d",player.GetNextPosY());*/
 
-
-
 	enemy.Draw(screen.GetScreenX());
 
 	player.Draw(screen.GetScreenX());
