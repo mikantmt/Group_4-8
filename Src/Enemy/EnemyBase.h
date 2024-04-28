@@ -1,5 +1,6 @@
 #pragma once
 #include "../Collision/Collision.h"
+#include "../Mapchip/MapChip.h"
 #include "../Random/Random.h"
 #include "../Mapchip/MapChip.h"
 #include "../Player/Player.h"
@@ -9,7 +10,8 @@ const int GROUND_MAX_NUM = 10;	//同時に存在できる敵の数
 
 const float MOVE_RANGE = 240.0f;//敵の移動範囲
 
-const float MOVE_SPEED = 2.5f;	//敵の移動スピード
+const float MOVE_SPEED  = 2.5f;	//敵の移動スピード
+const float MOVE_YSPEED = 0.3f;
 
 class EnemyBase {
 private:
@@ -33,6 +35,7 @@ private:
 	//};
 
 	Collision collision;
+	MapChip	  mapchip;
 	Random	  random;
 	Player	  player;
 
@@ -47,6 +50,8 @@ public:
 		float EnemyY;		//敵Y座標
 		float EnemySaveX;	//敵X座標保存用
 		float EnemySaveY;	//敵Y座標保存用
+
+		float YSpeed;		//落下スピード
 
 		float SpaceMinX;	//敵の移動幅
 		float SpaceMaxX;	//敵の移動幅
@@ -89,6 +94,10 @@ public:
 	void Init();
 	void Step(float X, float Y, bool hide);
 	void Draw(int X);
+
+	void MapToEnemyX(int X,int Y);
+	void MapToEnemyY(int X, int Y);
+
 	void Fin();
 
 	// 座標を更新

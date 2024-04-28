@@ -9,6 +9,7 @@ private:
 	MapChip mapchip;
 	Screen screen;
 	EnemyBase enemy;
+	EnemyBase::Enemy Ground[GROUND_MAX_NUM];
 public:
 	void Init();
 	void Step();
@@ -16,4 +17,5 @@ public:
 	void Fin();
 
 	void MapCollision();
+	void MapCollisionEnemy();
 };

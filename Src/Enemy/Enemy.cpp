@@ -22,10 +22,11 @@ void EnemyBase::Init() {
 		Ground[GroundIndex].Handle = LoadGraph(EnemyPath[GROUND_ENEMY]);
 
 		Ground[GroundIndex].EnemyX = random.ScopingRand(10.0f * (float)MAPCIP_X_SIZE, (float)(MAPCIP_X_MAXNUM * MAPCIP_X_SIZE));
-		Ground[GroundIndex].EnemyY = 608;
+		Ground[GroundIndex].EnemyY = 100;
 
 		Ground[GroundIndex].EnemySaveX = Ground[GroundIndex].EnemyX;
 		Ground[GroundIndex].EnemySaveY = Ground[GroundIndex].EnemyY;
+		Ground[GroundIndex].YSpeed = 0.0f;
 
 		Ground[GroundIndex].FlipFlg = false;
 		Ground[GroundIndex].DetecFlg = false;
@@ -64,6 +65,8 @@ void EnemyBase::Step(float X,float Y,bool hide) {
 
 	//陸上の敵
 	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
+		Ground[GroundIndex].YSpeed += MOVE_YSPEED;
+		Ground[GroundIndex].EnemySaveY += Ground[GroundIndex].YSpeed;
 		Ground[GroundIndex].FlipMinus();
 		Ground[GroundIndex].FindPlayer(X,7);//プレイヤーを探す
 		if (!Ground[GroundIndex].DetecFlg) {//プレイヤーを発見していなければ
@@ -146,6 +149,97 @@ void EnemyBase::Enemy::FindPlayer(float X,float Scale) {
 
 void  EnemyBase::Enemy::GetHide(bool hide) {
 	PlayerHide = hide;
+}
+
+void EnemyBase::MapToEnemyY(int X, int Y) {
+	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
+
+		bool dirArray[4] = { false,false,false,false };
+		Ground[GroundIndex].GetMoveDirection(dirArray);
+
+		// ★ここを考える
+		// 矩形の当たり判定用のデータを準備
+		// プレイヤーの情報
+		float Ax = Ground[GroundIndex].GetPosX();
+		float Ay = Ground[GroundIndex].GetPosY();
+		float Aw = 32;
+		float Ah = 32;
+
+		// オブジェクトの情報
+		int Bx = X * MAPCIP_X_SIZE;
+		int By = Y * MAPCIP_Y_SIZE;
+		int Bw = MAP_SIZE;
+		int Bh = MAP_SIZE;
+
+		// ※Y方向のみに移動したと仮定した座標で当たり判定をチェックします
+		Ay = Ground[GroundIndex].GetSavePosY();
+		Ax = Ground[GroundIndex].GetPosX();
+
+		// 当たっているかチェック
+		if (collision.IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
+			// 上方向の修正
+			if (dirArray[0]) {
+				// ★ここを考える
+				// めり込み量を計算する
+				float overlap = By + Bh - Ay;
+				Ground[GroundIndex].SetSaveY(Ay + overlap);
+			}
+
+			// 下方向の修正
+			if (dirArray[1]) {
+				// ★ここを考える
+				// めり込み量を計算する
+				float overlap = Ay + Ah - By;
+				Ground[GroundIndex].SetSaveY(Ay - overlap);
+				Ground[GroundIndex].YSpeed = 0.0f;
+			}
+		}
+	}
+}
+
+void EnemyBase::MapToEnemyX(int X, int Y) {
+	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
+
+		bool dirArray[4] = { false,false,false,false };
+		Ground[GroundIndex].GetMoveDirection(dirArray);
+
+		// ★ここを考える
+		// 矩形の当たり判定用のデータを準備
+		// プレイヤーの情報
+		float Ax = Ground[GroundIndex].GetPosX();
+		float Ay = Ground[GroundIndex].GetPosY();
+		float Aw = 32;
+		float Ah = 32;
+
+		// オブジェクトの情報
+		int Bx = X * MAPCIP_X_SIZE;
+		int By = Y * MAPCIP_Y_SIZE;
+		int Bw = MAP_SIZE;
+		int Bh = MAP_SIZE;
+
+		// ※Y方向のみに移動したと仮定した座標で当たり判定をチェックします
+		Ay = Ground[GroundIndex].GetSavePosY();
+		Ax = Ground[GroundIndex].GetSavePosX();
+
+		// 当たっているかチェック
+		if (collision.IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
+			// 上方向の修正
+			if (dirArray[2]) {
+				// ★ここを考える
+				// めり込み量を計算する
+				float overlap = Bx + Bw - Ax;
+				Ground[GroundIndex].SetSaveX(Ax + overlap);
+			}
+
+			// 下方向の修正
+			if (dirArray[3]) {
+				// ★ここを考える
+				// めり込み量を計算する
+				float overlap = Ax + Aw - Bx;
+				Ground[GroundIndex].SetSaveX(Ax - overlap);
+			}
+		}
+	}
 }
 
 void EnemyBase::Update(){

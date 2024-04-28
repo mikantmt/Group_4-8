@@ -13,10 +13,13 @@ void cPlay::Step()
 	screen.StepScreen(player.GetPosX(), player.GetPosY());
 
 	player.Step();
+	enemy.Step(player.GetNextPosX(), player.GetNextPosY(), player.IsHide);
 
 	MapCollision();
 
-	enemy.Step(player.GetNextPosX(),player.GetNextPosY(), player.IsHide);
+	MapCollisionEnemy();
+
+	
 
 	player.UpdatePos();
 
@@ -40,6 +43,8 @@ void cPlay::Draw()
 		DrawFormatString(0, 0, GetColor(255, 0, 0), "‰B‚ê‚Ä‚¢‚È‚¢");
 
 	/*DrawFormatString(0, 16, GetColor(0, 255, 255), "%d",player.GetNextPosY());*/
+
+
 
 	enemy.Draw(screen.GetScreenX());
 
@@ -208,4 +213,22 @@ void cPlay::MapCollision() {
 		}
 		
 	}*/
+}
+
+void cPlay::MapCollisionEnemy() {
+	for (int MapChipYIndex = 0; MapChipYIndex < MAPCIP_Y_MAXNUM; MapChipYIndex++) {
+		for (int MapChipXIndex = 0; MapChipXIndex < MAPCIP_X_MAXNUM; MapChipXIndex++) {
+			if (mapchip.m_FileReadMapData[MapChipYIndex][MapChipXIndex] == -1) 
+				continue;
+			enemy.MapToEnemyY(MapChipXIndex, MapChipYIndex);
+		}
+	}
+
+	for (int MapChipYIndex = 0; MapChipYIndex < MAPCIP_Y_MAXNUM; MapChipYIndex++) {
+		for (int MapChipXIndex = 0; MapChipXIndex < MAPCIP_X_MAXNUM; MapChipXIndex++) {
+			if (mapchip.m_FileReadMapData[MapChipYIndex][MapChipXIndex] == -1)
+				continue;
+			enemy.MapToEnemyX(MapChipXIndex, MapChipYIndex);
+		}
+	}
 }
