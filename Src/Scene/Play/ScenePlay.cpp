@@ -1,5 +1,5 @@
 #include "ScenePlay.h"
-
+//ê¥êÖ
 void cPlay::Init()
 {
 	sound.Init();
@@ -24,6 +24,8 @@ void cPlay::Step()
 	player.UpdatePos();
 
 	enemy.Update();
+
+	GetDeath();
 
 	if(player.ActiveFlg) {
 		cScene::SceneTypeID = SCENE_TYPE::TYPE_ID_FIN;
@@ -209,6 +211,7 @@ void cPlay::MapCollisionEnemy() {
 			if (mapchip.m_FileReadMapData[MapChipYIndex][MapChipXIndex] == -1) 
 				continue;
 			enemy.MapToEnemyY(MapChipXIndex, MapChipYIndex);
+			enemy.MapCollision(MapChipXIndex, MapChipYIndex);
 		}
 	}
 
@@ -218,5 +221,11 @@ void cPlay::MapCollisionEnemy() {
 				continue;
 			enemy.MapToEnemyX(MapChipXIndex, MapChipYIndex);
 		}
+	}
+}
+
+void cPlay::GetDeath() {
+	if (enemy.PlayerDeath) {
+		player.ActiveFlg = true;
 	}
 }

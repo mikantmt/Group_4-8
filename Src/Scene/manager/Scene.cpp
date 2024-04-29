@@ -2,7 +2,7 @@
 #include "../Title/SceneTitle.h"
 #include "../Play/ScenePlay.h"
 #include "../Result/SceneResult.h"
-
+//ê¥êÖ
 SCENE_TYPE cScene::cScene::SceneTypeID;
 SCENE_ID cScene::cScene::SceneID;
 

@@ -4,7 +4,7 @@
 #include "../Sound/Sound.h"
 #include "../Score/Score.h"
 #include "../Player/Player.h"
-
+//´…
 enum SCENE_TYPE
 {
 	//ƒV[ƒ“‚ÌID

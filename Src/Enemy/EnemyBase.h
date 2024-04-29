@@ -1,4 +1,6 @@
 #pragma once
+#include "math.h"
+
 #include "../Collision/Collision.h"
 #include "../Mapchip/MapChip.h"
 #include "../Random/Random.h"
@@ -12,6 +14,8 @@ const float MOVE_RANGE = 240.0f;//敵の移動範囲
 
 const float MOVE_SPEED  = 2.5f;	//敵の移動スピード
 const float MOVE_YSPEED = 0.3f;
+const float BEAM_SPEED = 10.0f;	//敵の弾のスピード
+const int BEAM_SIZE = 10;
 
 class EnemyBase {
 private:
@@ -62,6 +66,14 @@ public:
 		bool DetecFlg;		//プレイヤー発見フラグ(初期値はfalse)
 		bool PlayerHide;	//プレイヤーが隠れているか
 
+
+		int  BeamHandle;	//画像ハンドル
+		VECTOR vPos;		//座標
+		bool IsShot;		//打っているか
+		VECTOR Rot;
+
+		float PlayerSaveX, PlayerSaveY;
+
 		//座標取得
 		float GetPosX()		{ return EnemyX; }
 		float GetPosY()		{ return EnemyY; }
@@ -85,20 +97,27 @@ public:
 
 		//Hideを取得
 		void GetHide(bool hide);
+
+		//弾を打つ処理
+		void Shot();
+
+		
 	};
 
 	Enemy Fly	[FLY_MAX_NUM];	  //空上の敵宣言
 	Enemy Ground[GROUND_MAX_NUM]; //陸上の敵宣言
 
+	//プレイヤー死んだ
+	int PlayerDeath;
+
 	void Init();
-	
 	void Step(float X, float Y, bool hide);
 	void Step(float X, float Y);
-
 	void Draw(int X);
 
 	void MapToEnemyX(int X,int Y);
 	void MapToEnemyY(int X, int Y);
+	void MapCollision(int X, int Y);
 
 	void Fin();
 

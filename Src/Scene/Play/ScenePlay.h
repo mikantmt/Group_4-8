@@ -18,4 +18,5 @@ public:
 
 	void MapCollision();
 	void MapCollisionEnemy();
+	void GetDeath();
 };

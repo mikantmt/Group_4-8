@@ -1,4 +1,5 @@
 #include "EnemyBase.h"
+//清水
 
 void EnemyBase::Init() {
 	for (int FlyIndex = 0; FlyIndex < FLY_MAX_NUM; FlyIndex++) {
@@ -16,13 +17,19 @@ void EnemyBase::Init() {
 
 		Fly[FlyIndex].SetSpace(Fly[FlyIndex].EnemyX);
 		Fly[FlyIndex].PlayerHide = false;
+
+		Fly[FlyIndex].BeamHandle = LoadGraph("Data/Enemy/Beam.png");
+		Fly[FlyIndex].vPos = { Fly[FlyIndex].EnemyX ,Fly[FlyIndex].EnemyY ,0.0f };
+		Fly[FlyIndex].IsShot = false;
+		Fly[FlyIndex].PlayerSaveX = 0.0f;
+		Fly[FlyIndex].PlayerSaveY = 0.0f;
 	}
 
 	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
 		Ground[GroundIndex].Handle = LoadGraph(EnemyPath[GROUND_ENEMY]);
 
 		Ground[GroundIndex].EnemyX = random.ScopingRand(10.0f * (float)MAPCIP_X_SIZE, (float)(MAPCIP_X_MAXNUM * MAPCIP_X_SIZE));
-		Ground[GroundIndex].EnemyY = 100;
+		Ground[GroundIndex].EnemyY = 400;
 
 		Ground[GroundIndex].EnemySaveX = Ground[GroundIndex].EnemyX;
 		Ground[GroundIndex].EnemySaveY = Ground[GroundIndex].EnemyY;
@@ -33,12 +40,17 @@ void EnemyBase::Init() {
 
 		Ground[GroundIndex].SetSpace(Ground[GroundIndex].EnemyX);
 	}
+
+	PlayerDeath = false;
 }
 
 void EnemyBase::Step(float X,float Y,bool hide) {
-
 	//空上の敵
 	for (int FlyIndex = 0; FlyIndex < FLY_MAX_NUM; FlyIndex++) {
+		Fly[FlyIndex].PlayerSaveX = X;//プレイヤーの座標を保存
+		Fly[FlyIndex].PlayerSaveY = Y;
+		Fly[FlyIndex].vPos.x = Fly[FlyIndex].EnemySaveX;
+
 		Fly[FlyIndex].Flip();//反転切り替え
 		Fly[FlyIndex].FindPlayer(X,10);//プレイヤーを探す
 		Fly[FlyIndex].GetHide(hide);
@@ -52,7 +64,7 @@ void EnemyBase::Step(float X,float Y,bool hide) {
 			}
 		}
 		else {//プレイヤーを発見していれば
- 			if (Fly[FlyIndex].PlayerHide) {//プレイヤーが隠れていれば動かす
+			if (Fly[FlyIndex].PlayerHide) {//プレイヤーが隠れていれば動かす
 				if (!Fly[FlyIndex].FlipFlg) {//反転させる
 					Fly[FlyIndex].EnemySaveX--;
 				}
@@ -60,6 +72,16 @@ void EnemyBase::Step(float X,float Y,bool hide) {
 					Fly[FlyIndex].EnemySaveX++;
 				}
 			}
+			else
+				Fly[FlyIndex].IsShot = true;
+				if (Fly[FlyIndex].IsShot) {
+					Fly[FlyIndex].Shot();
+				}
+		}
+
+		//当たり判定
+		if (collision.IsHitRect(X, Y, 32, 32, Fly[FlyIndex].vPos.x, Fly[FlyIndex].vPos.y, BEAM_SIZE, BEAM_SIZE)) {
+			PlayerDeath = true;
 		}
 	}
 }
@@ -81,6 +103,11 @@ void EnemyBase::Step(float X, float Y) {
 			else
 				Ground[GroundIndex].EnemySaveX += 3;
 		}
+
+		//当たり判定
+		if (collision.IsHitRect(X, Y, 32, 32, Ground[GroundIndex].EnemySaveX, Ground[GroundIndex].EnemySaveY, 32, 32)) {
+			PlayerDeath = true;
+		}
 	}
 }
 
@@ -88,6 +115,9 @@ void EnemyBase::Draw(int X) {
 	//空上
 	for (int FlyIndex = 0; FlyIndex < FLY_MAX_NUM; FlyIndex++) {
 		DrawGraph(Fly[FlyIndex].EnemyX - X, Fly[FlyIndex].EnemyY, Fly[FlyIndex].Handle, true);
+		if (Fly[FlyIndex].IsShot) {
+			DrawGraph(Fly[FlyIndex].vPos.x - X, Fly[FlyIndex].vPos.y, Fly[FlyIndex].BeamHandle, true);
+		}
 	}
 	//陸上
 	for (int GroundIndex = 0; GroundIndex < GROUND_MAX_NUM; GroundIndex++) {
@@ -142,6 +172,12 @@ void EnemyBase::Enemy::FindPlayer(float X,float Scale) {
 
 void  EnemyBase::Enemy::GetHide(bool hide) {
 	PlayerHide = hide;
+}
+
+void EnemyBase::Enemy::Shot() {
+	vPos.y += BEAM_SPEED;
+
+	if (!IsShot) { IsShot = true; }
 }
 
 void EnemyBase::MapToEnemyY(int X, int Y) {
@@ -231,6 +267,27 @@ void EnemyBase::MapToEnemyX(int X, int Y) {
 				float overlap = Ax + Aw - Bx;
 				Ground[GroundIndex].SetSaveX(Ax - overlap);
 			}
+		}
+	}
+}
+
+void EnemyBase::MapCollision(int X, int Y) {
+	for (int FlyIndex = 0; FlyIndex < FLY_MAX_NUM; FlyIndex++) {
+
+		float Ax = Fly[FlyIndex].vPos.x;
+		float Ay = Fly[FlyIndex].vPos.y;
+		float Aw = BEAM_SIZE;
+		float Ah = BEAM_SIZE;
+
+		// オブジェクトの情報
+		int Bx = X * MAPCIP_X_SIZE;
+		int By = Y * MAPCIP_Y_SIZE;
+		int Bw = MAP_SIZE;
+		int Bh = MAP_SIZE;
+
+		// 当たっているかチェック
+		if (collision.IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
+			Fly[FlyIndex].IsShot = false;
 		}
 	}
 }

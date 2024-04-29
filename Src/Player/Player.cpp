@@ -25,6 +25,8 @@ Player::~Player() {}
 void Player::Init() {
 	playerHan = LoadGraph(PLAYER_PATH);
 	playerHideHan = LoadGraph("Data/Player/PlayerHide.png");
+	player_x = 0;
+	player_y = 604;
 
 	ActiveFlg = false;
 	IsHide = false;
