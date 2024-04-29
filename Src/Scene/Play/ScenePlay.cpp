@@ -2,6 +2,7 @@
 //ê¥êÖ
 void cPlay::Init()
 {
+	score.Init();
 	sound.Init();
 	player.Init();
 	enemy.Init();
@@ -45,6 +46,7 @@ void cPlay::Fin()
 {
 	sound.Fin();
 	player.Fin();
+	score.Add(player.GetPosX());
 	
 	cScene::SceneID = SCENE_ID::SCENE_ID_RESULT;
 }
@@ -222,7 +224,6 @@ void cPlay::MapCollision() {
 				}
 			}
 		}
-		
 	}*/
 }
 

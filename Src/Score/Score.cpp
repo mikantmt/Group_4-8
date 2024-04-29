@@ -26,8 +26,7 @@ void Score::Reset()
 	}
 }
 
-void Score::Add(float AddScoreNum)
-{
+void Score::Add(float AddScoreNum){
 	ScoreNum += AddScoreNum;
 }
 

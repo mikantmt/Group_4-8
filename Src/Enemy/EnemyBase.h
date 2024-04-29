@@ -10,12 +10,12 @@
 const int FLY_MAX_NUM	 = 10;	//同時に存在できる敵の数
 const int GROUND_MAX_NUM = 10;	//同時に存在できる敵の数
 
-const float MOVE_RANGE = 240.0f;//敵の移動範囲
+const float MOVE_RANGE  = 240.0f;//敵の移動範囲
 
 const float MOVE_SPEED  = 2.5f;	//敵の移動スピード
 const float MOVE_YSPEED = 0.3f;
-const float BEAM_SPEED = 10.0f;	//敵の弾のスピード
-const int BEAM_SIZE = 10;
+const float BEAM_SPEED  = 5.0f;	//敵の弾のスピード
+const int BEAM_SIZE		= 10;
 
 class EnemyBase {
 private:

@@ -7,6 +7,9 @@ void cResult::Init()
 
 void cResult::Step()
 {
+	score.Update();
+	score.Read();
+
 	if (input.IsKeyPush(KEY_INPUT_SPACE)) {
 		cScene::SceneTypeID = SCENE_TYPE::TYPE_ID_FIN;
 	}
@@ -14,7 +17,9 @@ void cResult::Step()
 
 void cResult::Draw()
 {
-	DrawFormatString(MID_SCREEN_X, MID_SCREEN_Y, GetColor(0, 255, 255), "ƒŠƒUƒ‹ƒg");
+	SetFontSize(64);
+	DrawFormatString(MID_SCREEN_X - 32, MID_SCREEN_Y - 32, GetColor(255, 255, 255), "%.f", score.ScoreNum);
+	SetFontSize(16);
 }
 
 void cResult::Fin()
