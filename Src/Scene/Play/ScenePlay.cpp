@@ -175,9 +175,7 @@ void cPlay::MapCollision() {
 	{
 		for (int mapIndexX = 0; mapIndexX < MAPCIP_X_MAXNUM; mapIndexX++)
 		{
-			if (mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 1 
-				|| mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 2 
-				|| mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 3)
+			if (mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 3)
 			{
 				int Bx = mapIndexX * MAPCIP_X_SIZE;
 				int By = mapIndexY * MAPCIP_Y_SIZE;
@@ -186,6 +184,29 @@ void cPlay::MapCollision() {
 
 				if (collision.IsHitRect((float)player.GetNextPosX(), (float)player.GetNextPosY(), (float)PLAYER_WIDTH, (float)PLAYER_HEIGHT, (float)Bx, (float)By, (float)Bw, (float)Bh)) {
 					player.ActiveFlg = true;
+				}
+			}
+
+			if (mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 2)
+			{
+				int Bx = mapIndexX * MAPCIP_X_SIZE;
+				int By = mapIndexY * MAPCIP_Y_SIZE;
+				int Bw = MAP_SIZE;
+				int Bh = MAP_SIZE;
+
+				if (collision.IsHitRect((float)player.GetNextPosX(), (float)player.GetNextPosY(), (float)PLAYER_WIDTH, (float)PLAYER_HEIGHT, (float)Bx, (float)By + 16, (float)Bw, (float)Bh)) {
+					player.ActiveFlg = true;
+				}
+			}
+
+			if (mapchip.m_FileReadMapData[mapIndexY][mapIndexX] == 1) {
+				int Bx = mapIndexX * MAPCIP_X_SIZE;
+				int By = mapIndexY * MAPCIP_Y_SIZE;
+				int Bw = MAP_SIZE;
+				int Bh = MAP_SIZE;
+
+				if (collision.IsHitRect((float)player.GetNextPosX(), (float)player.GetNextPosY(), (float)PLAYER_WIDTH, (float)PLAYER_HEIGHT, (float)Bx, (float)By, (float)Bw, (float)Bh)) {
+					cScene::SceneTypeID = SCENE_TYPE::TYPE_ID_FIN;
 				}
 			}
 		}
