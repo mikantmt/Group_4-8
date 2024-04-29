@@ -7,6 +7,7 @@ void cPlay::Init()
 	player.Init();
 	enemy.Init();
 	mapchip.Init();
+	sound.Step(TITLE, DX_PLAYTYPE_LOOP, 60);
 }
 
 void cPlay::Step()

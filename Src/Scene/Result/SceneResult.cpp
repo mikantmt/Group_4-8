@@ -3,6 +3,8 @@
 void cResult::Init()
 {
 	// タイトルのループ処理へ遷移
+	sound.Init();
+	sound.Step(TITLE, DX_PLAYTYPE_LOOP, 60);
 }
 
 void cResult::Step()
@@ -24,6 +26,7 @@ void cResult::Draw()
 
 void cResult::Fin()
 {
+	sound.Fin();
 	// プレイシーンに遷移
 	cScene::SceneID = SCENE_ID::SCENE_ID_TITLE;
 	

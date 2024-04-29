@@ -15,7 +15,7 @@ private:
 	//サウンドのファイルパス
 	const char SoundPath[SOUND_TYPE_NUM][256] =
 	{
-		"Data/Sound/Title.mp3"
+		"Data/Sound/BGM.mp3"
 	};
 
 	int Sound[SOUND_TYPE_NUM];
